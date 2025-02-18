@@ -2,11 +2,10 @@ import { useState } from "react";
 
 // creo un array che contiene la lista di articoli che sarà lo stato iniziale
 const articlesList = [
-    "Giacca in pelle",
-    "Sneakers bianche",
-    "Occhiali da sole Ray-Ban",
-    "Zaino in pelle minimal",
-];
+    { id: 1, title: 'Cintura' },
+    { id: 2, title: 'Beretta' },
+    { id: 3, title: 'Pantaloni' }
+]
 
 // componente Products.jsx
 export default function ArticleList() {
@@ -31,14 +30,14 @@ export default function ArticleList() {
         setNewArticle('');
     }
     // Funzione che viene chiamata quando si clicca il bottone "elimina" accanto ad un articolo nella lista.
-    const removeArticle = i => {
+    const removeArticle = id => {
 
         // uso il metodo filter per creare un nuovo array senza l'articolo che ha l'indice 'i', article è importante perchè filter si aspetta due parametri
-        const updatedArticles = articles.filter((article, index) => {
+        const updatedArticles = articles.filter((article) => {
             // La condizione verifica che l'indice dell'articolo corrente (index) sia diverso da 'i'
             // Se index è diverso da i, l'articolo viene mantenuto nel nuovo array.
             // Se index è uguale a i, l'articolo NON verrà incluso nel nuovo array.
-            return index !== i
+            return article.id !== id
         })
         // Aggiorno lo stato con la lista senza l'articolo rimosso.
         setArticles(updatedArticles);
@@ -65,11 +64,11 @@ export default function ArticleList() {
                 :
                 <ul>
                     {/* Se la lista non è vuota, allora viene eseguito questo codice */}
-                    {articles.map((article, i) => (
-                        <li key={i}>
-                            {article}
+                    {articles.map((article) => (
+                        <li key={article.id}>
+                            {article.title}
                             {/* Ogni bottone "elimina" ha un evento onClick che chiama la funzione removeArticle(i) quando l'utente clicca sul bottone */}
-                            <button onClick={() => removeArticle(i)}>
+                            <button onClick={() => removeArticle(article.id)}>
                                 elimina
                             </button>
                         </li>
